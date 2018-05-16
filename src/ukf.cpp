@@ -25,17 +25,17 @@ UKF::UKF() {
 
 	// initial covariance matrix (initialized to be an identity matrix, as described in the lesson)
 	P_ = MatrixXd(5, 5);
-	P_ << 1, 0, 0, 0, 0,
-		0, 1, 0, 0, 0,
+	P_ << 0.15, 0, 0, 0, 0,
+		0, 0.15, 0, 0, 0,
 		0, 0, 1, 0, 0,
 		0, 0, 0, 1, 0,
 		0, 0, 0, 0, 1;
 
 	// Process noise standard deviation longitudinal acceleration in m/s^2
-	std_a_ = 2;
+	std_a_ = 1.88;
 
 	// Process noise standard deviation yaw acceleration in rad/s^2
-	std_yawdd_ = 0.35;
+	std_yawdd_ = 1.2;
 
 	//DO NOT MODIFY measurement noise values below these are provided by the sensor manufacturer.
 	// Laser measurement noise standard deviation position1 in m
@@ -122,13 +122,13 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 				double p_x = rho * cos(phi);
 				double p_y = rho * sin(phi);
 
-				x_ << p_x, p_y, 1.0, 1.0, 0.15;
+				x_ << p_x, p_y, 0.0, 0.0, 0.0;
 
 
 
 			}
 			else if (meas_package.sensor_type_ == MeasurementPackage::LASER && use_laser_) {
-				x_ << meas_package.raw_measurements_(0), meas_package.raw_measurements_(1), 1.0, 1.0, 0.15;
+				x_ << meas_package.raw_measurements_(0), meas_package.raw_measurements_(1), 0.0, 0.0, 0.0;
 
 			}
 			is_initialized_ = true;
